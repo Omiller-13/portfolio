@@ -1,0 +1,49 @@
+---
+const navItems = [
+  { href: '/', label: 'home' },
+  { href: '/projects', label: 'projects' },
+  { href: '/about', label: 'about' },
+  { href: '/contact', label: 'contact' },
+];
+const currentPath = Astro.url.pathname;
+---
+<header class="site-header">
+  <a href="/" class="logo">~/portfolio</a>
+  <nav>
+    {navItems.map((item) => (
+      <a href={item.href} class={currentPath === item.href ? 'active' : ''}>
+        {item.label}
+      </a>
+    ))}
+  </nav>
+</header>
+
+<style>
+  .site-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--space-3) var(--space-4);
+    max-width: var(--max-width);
+    margin: 0 auto;
+  }
+  .logo {
+    font-family: var(--font-mono);
+    color: var(--color-text);
+    font-weight: 600;
+  }
+  nav {
+    display: flex;
+    gap: var(--space-4);
+  }
+  nav a {
+    font-family: var(--font-mono);
+    font-size: var(--fs-sm);
+    color: var(--color-text-muted);
+  }
+  nav a.active,
+  nav a:hover {
+    color: var(--color-accent);
+    text-decoration: none;
+  }
+</style>
