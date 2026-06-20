@@ -1,0 +1,12 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import ErrorDisplay from "../components/ErrorDisplay.astro";
+---
+
+<BaseLayout title="404 — Page Not Found">
+  <ErrorDisplay
+    code={404}
+    title="Page not found"
+    message="Whatever you were looking for isn't here - it moved, or it never existed. Let's get you back on track."
+  />
+</BaseLayout>

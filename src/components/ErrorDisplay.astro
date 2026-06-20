@@ -1,0 +1,60 @@
+---
+interface Props {
+  code: number;
+  title: string;
+  message: string;
+}
+const { code, title, message } = Astro.props;
+---
+
+<section class="error">
+  <img
+    src={`https://http.cat/${code}`}
+    alt={`Cat illustrating HTTP status ${code}`}
+    class="error-cat"
+    loading="lazy"
+  />
+  <p class="error-code">// error {code}</p>
+  <h1>{title}</h1>
+  <p class="error-message">{message}</p>
+  <a href="/" class="error-home">cd ~/home</a>
+</section>
+
+<style>
+  .error {
+    max-width: var(--max-width);
+    margin: var(--space-7) auto;
+    padding: 0 var(--space-4);
+    text-align: center;
+  }
+  .error-cat {
+    width: 100%;
+    max-width: 400px;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    border-radius: var(--radius);
+    border: 1px solid var(--color-border);
+    margin-bottom: var(--space-4);
+  }
+  .error-code {
+    font-family: var(--font-mono);
+    color: var(--color-accent);
+    font-size: var(--fs-sm);
+  }
+  h1 {
+    font-family: var(--font-mono);
+    font-size: var(--fs-2xl);
+    margin: var(--space-3) 0;
+  }
+  .error-message {
+    font-family: var(--font-sans);
+    color: var(--color-text-muted);
+    font-size: var(--fs-base);
+    max-width: 50ch;
+    margin: 0 auto var(--space-4);
+  }
+  .error-home {
+    font-family: var(--font-mono);
+    font-size: var(--fs-sm);
+  }
+</style>
