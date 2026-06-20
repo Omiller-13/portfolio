@@ -1,16 +1,30 @@
 ---
-import BaseLayout from "../layouts/BaseLayout.astro";
+import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
 <BaseLayout title="Owen Miller — Portfolio">
   <section class="hero">
     <p class="eyebrow">// engineering portfolio — work in progress</p>
-    <h1>Hi, I'm Owen.</h1>
+    <h1>Hi, I'm Owen !</h1>
     <p class="lede">
-      Senior Electrical Engineering student at the University of Maryland. This
-      site will showcase my embedded systems, DSP, and hardware projects —
-      currently under construction. Check back soon.
+      Senior Electrical Engineering student at the University of Maryland, College Park and Electrical Enginnering Intern at Lockheed Martin.
+    
     </p>
+	<p class="lede">
+		This site will showcase some of the projects and work I have done in engineering, along with some other fun things,but is currently under construction. Check back soon !
+	</p>
+  </section>
+
+  <section class="contact">
+    <h2>Contact</h2>
+    <p>
+      Email:
+      <a href="mailto:omiller@umd.edu">omiller@umd.edu</a>
+    </p>
+    <ul class="contact-list">
+      <li>LinkedIn: <a href="https://linkedin.com/in/owenmiller13" target="_blank" rel="noopener noreferrer">linkedin.com/in/owenmiller13</a></li>
+      <li>GitHub: <a href="https://github.com/Omiller-13" target="_blank" rel="noopener noreferrer">github.com/Omiller-13</a></li>
+    </ul>
   </section>
 </BaseLayout>
 
@@ -20,21 +34,49 @@ import BaseLayout from "../layouts/BaseLayout.astro";
     margin: var(--space-7) auto 0;
     padding: 0 var(--space-4);
   }
-
   .eyebrow {
     font-family: var(--font-mono);
     color: var(--color-accent);
     font-size: var(--fs-sm);
   }
-
   h1 {
     font-size: var(--fs-3xl);
     margin: var(--space-3) 0;
   }
-
   .lede {
+    font-family: var(--font-sans);
     color: var(--color-text-muted);
     font-size: var(--fs-lg);
     max-width: 60ch;
+  }
+
+  .contact {
+    max-width: var(--max-width);
+    margin: var(--space-7) auto;
+    padding: 0 var(--space-4);
+  }
+  .contact h2 {
+    font-family: var(--font-mono);
+    font-size: var(--fs-2xl);
+    margin-bottom: var(--space-3);
+  }
+  .contact p {
+    font-family: var(--font-sans);
+    color: var(--color-text-muted);
+    font-size: var(--fs-base);
+  }
+  .contact-list {
+    list-style: none;
+    padding: 0;
+    margin: var(--space-3) 0 0;
+    font-family: var(--font-sans);
+    color: var(--color-text-muted);
+  }
+  .contact-list li {
+    padding: var(--space-2) 0;
+    border-top: 1px solid var(--color-border);
+  }
+  .contact-list a {
+    margin-left: var(--space-2);
   }
 </style>
