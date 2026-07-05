@@ -1,0 +1,159 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { getCollection, render } from "astro:content";
+
+export async function getStaticPaths() {
+  const entries = await getCollection("fun");
+  return entries.map((entry) => ({
+    params: { slug: entry.id },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+---
+
+<BaseLayout title={`${entry.data.title} — Owen Miller`}>
+  <article class="entry">
+    <a href="/fun" class="back">← back to random & fun</a>
+
+    <header class="entry-header">
+      <p class="eyebrow">// random & fun</p>
+      <h1>{entry.data.title}</h1>
+      <p class="entry-desc">{entry.data.description}</p>
+      <div class="entry-meta">
+        <span class="date">
+          {
+            entry.data.date.toLocaleDateString("en-US", {
+              year: "numeric",
+              month: "long",
+            })
+          }
+        </span>
+        <ul class="tags">
+          {entry.data.tags.map((tag) => <li class="tag">{tag}</li>)}
+        </ul>
+      </div>
+    </header>
+
+    <div class="entry-content">
+      <Content />
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .entry {
+    max-width: 780px;
+    margin: var(--space-7) auto;
+    padding: 0 var(--space-4);
+  }
+
+  .back {
+    font-family: var(--font-mono);
+    font-size: var(--fs-sm);
+    color: var(--color-text-muted);
+    display: inline-block;
+    margin-bottom: var(--space-4);
+    transition: color 0.2s ease;
+  }
+  .back:hover {
+    color: var(--color-accent);
+    text-decoration: none;
+  }
+
+  .entry-header {
+    padding-bottom: var(--space-4);
+    border-bottom: 1px solid var(--color-border);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  h1 {
+    font-size: var(--fs-2xl);
+    margin: 0;
+  }
+
+  .entry-desc {
+    color: var(--color-text-muted);
+    max-width: 65ch;
+    margin: 0;
+  }
+
+  .entry-meta {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    flex-wrap: wrap;
+  }
+
+  .date {
+    font-family: var(--font-mono);
+    font-size: var(--fs-sm);
+    color: var(--color-text-muted);
+  }
+
+  .tags {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+
+  .tag {
+    font-family: var(--font-mono);
+    font-size: var(--fs-sm);
+    color: var(--color-text-muted);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    padding: 2px var(--space-2);
+  }
+
+  .entry-content {
+    margin-top: var(--space-5);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  :global(.entry-content h2) {
+    font-size: var(--fs-lg);
+    margin-top: var(--space-4);
+    padding-bottom: var(--space-2);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  :global(.entry-content p) {
+    color: var(--color-text-muted);
+    max-width: 70ch;
+  }
+
+  :global(.entry-content ul) {
+    color: var(--color-text-muted);
+    padding-left: var(--space-4);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  :global(.entry-content a) {
+    color: var(--color-accent);
+  }
+
+  :global(.entry-content img) {
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius);
+    border: 1px solid var(--color-border);
+    display: block;
+    margin: var(--space-2) 0;
+  }
+
+  @media (max-width: 680px) {
+    h1 { font-size: var(--fs-lg); }
+  }
+</style>

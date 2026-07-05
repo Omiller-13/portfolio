@@ -1,0 +1,153 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const projects = await getCollection('projects');
+projects.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+const statusColor: Record<string, string> = {
+  'complete': '#39ffa0',
+  'in progress': '#f0c94a',
+  'ongoing': '#7d8a9c',
+};
+---
+
+<BaseLayout title="Projects — Owen Miller">
+  <section class="projects">
+    <p class="eyebrow">//Projects</p>
+    <h1>Things I'm building !</h1>
+    <p class="subtitle">
+      A running list of my projects. Click on a project to be taken to a breakdown
+    </p>
+
+    <ul class="project-list">
+      {projects.map((project) => (
+        <li class="project-item">
+          <a href={`/projects/${project.id}`} class="project-link">
+            <div class="project-header">
+              <h2>{project.data.title}</h2>
+              <span
+                class="status"
+                style={`color: ${statusColor[project.data.status]}`}
+              >
+                // {project.data.status}
+              </span>
+            </div>
+            <p class="project-desc">{project.data.description}</p>
+            <ul class="tags">
+              {project.data.tags.map((tag) => (
+                <li class="tag">{tag}</li>
+              ))}
+            </ul>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </section>
+</BaseLayout>
+
+<style>
+  .projects {
+    max-width: var(--max-width);
+    margin: var(--space-7) auto;
+    padding: 0 var(--space-4);
+  }
+
+  h1 {
+    font-size: var(--fs-3xl);
+    margin: var(--space-3) 0 0;
+  }
+
+  .subtitle {
+    color: var(--color-text-muted);
+    margin-top: var(--space-3);
+    max-width: 60ch;
+  }
+
+  .project-list {
+    list-style: none;
+    padding: 0;
+    margin: var(--space-5) 0 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .project-item {
+    border-top: 1px solid var(--color-border);
+    transition: border-color 0.2s ease;
+  }
+
+  .project-item:last-child {
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .project-item:has(.project-link:hover) {
+    border-color: var(--color-accent);
+  }
+
+  .project-link {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    padding: var(--space-4) 0;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .project-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: var(--space-4);
+  }
+
+  .project-header h2 {
+    font-size: var(--fs-lg);
+    margin: 0;
+    transition: color 0.2s ease;
+  }
+
+  .project-link:hover h2 {
+    color: var(--color-accent);
+  }
+
+  .status {
+    font-family: var(--font-mono);
+    font-size: var(--fs-sm);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .project-desc {
+    color: var(--color-text-muted);
+    max-width: 70ch;
+    margin: 0;
+  }
+
+  .tags {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+
+  .tag {
+    font-family: var(--font-mono);
+    font-size: var(--fs-sm);
+    color: var(--color-text-muted);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    padding: 2px var(--space-2);
+  }
+
+  @media (max-width: 680px) {
+    h1 { font-size: var(--fs-2xl); }
+
+    .project-header {
+      flex-direction: column;
+      gap: var(--space-2);
+    }
+  }
+</style>
